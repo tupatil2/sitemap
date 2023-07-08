@@ -9,5 +9,5 @@ import (
 func main() {
 	siteName := flag.String("site", "", "a string")
 	flag.Parse()
-	Sitemap.Init(*siteName)
+	Sitemap.GenerateSiteMap(*siteName)
 }

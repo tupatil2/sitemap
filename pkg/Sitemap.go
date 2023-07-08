@@ -29,7 +29,7 @@ var site string = ""
 var hostName string = ""
 
 // starting point
-func Init(siteName string) {
+func GenerateSiteMap(siteName string) {
 
 	// site name parsing
 	siteLen := len(siteName)
@@ -88,13 +88,13 @@ func getAllUrls(siteName string) []string {
 	var urls []string
 
 	vis[siteName] = true
-	q.Enqueue(siteName)
+	q.enqueue(siteName)
 	urls = append(urls, siteName)
 
-	for q.Size() != 0 {
-		size := q.Size()
+	for q.size() != 0 {
+		size := q.size()
 		for size > 0 {
-			link := q.Dequeue()
+			link := q.dequeue()
 			links := parseLink(link)
 
 			for _, vals := range links {
@@ -103,20 +103,20 @@ func getAllUrls(siteName string) []string {
 					continue
 				}
 				if childLink[0] == '/' {
-					parsedURL := ParsePath(childLink)
+					parsedURL := parsePath(childLink)
 					if parsedURL == "" || get(vis, parsedURL) {
 						continue
 					}
 					urls = append(urls, parsedURL)
-					q.Enqueue(parsedURL)
+					q.enqueue(parsedURL)
 					vis[parsedURL] = true
 				} else {
-					parsedURL := ParseSite(childLink)
+					parsedURL := parseSite(childLink)
 					if parsedURL == "" || get(vis, parsedURL) {
 						continue
 					}
 					urls = append(urls, parsedURL)
-					q.Enqueue(parsedURL)
+					q.enqueue(parsedURL)
 					vis[parsedURL] = true
 				}
 			}
@@ -128,7 +128,7 @@ func getAllUrls(siteName string) []string {
 }
 
 // parses the string which is URL
-func ParseSite(path string) string {
+func parseSite(path string) string {
 	parsedURL, err := url.Parse(path)
 	if err != nil {
 		log.Println("Error which parsing the URL")
@@ -143,7 +143,7 @@ func ParseSite(path string) string {
 }
 
 // parses the strings which starts with "/"
-func ParsePath(path string) string {
+func parsePath(path string) string {
 	if path == "" || path == "/" || isSectionLink(path) {
 		return ""
 	}
