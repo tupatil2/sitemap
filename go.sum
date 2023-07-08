@@ -1,4 +1,4 @@
-github.com/tusharr-patil/html-link-parser v0.0.0-20230707022254-bda6a6e47c29 h1:eHt1G4rzes6O9OLqNFz0XJRjB2hpGrsdnbVMfG510CY=
-github.com/tusharr-patil/html-link-parser v0.0.0-20230707022254-bda6a6e47c29/go.mod h1:/LOJXW2VyUYn1gIQTHJZSeT+rSDmmiqMCo4rD6s5cKk=
+github.com/tusharr-patil/html-link-parser v0.0.0-20230707060758-5d44ebbcbf05 h1:xLY2DIJ28sazMQNcQAIQONAqMBNuRkHP684gX0hDVoA=
+github.com/tusharr-patil/html-link-parser v0.0.0-20230707060758-5d44ebbcbf05/go.mod h1:/LOJXW2VyUYn1gIQTHJZSeT+rSDmmiqMCo4rD6s5cKk=
 golang.org/x/net v0.12.0 h1:cfawfvKITfUsFCeJIHJrbSxpeu/E81khclypR0GVT50=
 golang.org/x/net v0.12.0/go.mod h1:zEVYFnQC7m/vmpQFELhcD1EWkZlX69l4oqgmer6hfKA=
