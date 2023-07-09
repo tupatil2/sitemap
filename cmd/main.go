@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	siteName := flag.String("site", "", "a string")
+	siteName := flag.String("site", "", "provide the name of the site")
 	flag.Parse()
 	Sitemap.GenerateSiteMap(*siteName)
 }

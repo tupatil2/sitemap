@@ -15,11 +15,17 @@ go get -u github.com/tusharr-patil/sitemap
 Run 
 
 ```
-Sitemap.GenerateSiteMap("https://www.anyfavoritewebsite.com")
+Sitemap.GenerateSiteMap("https://gophercises.com/")
 ```
+
+Run
+```
+go run cmd/*.go -site="https://gophercises.com/" > output.xml
+```
+
 
 ## Functionality
 
 - Uses BFS for faster performance.
 - Uses [html-link-parser](github.com/tusharr-patil/html-link-parser) package to parse the link from html page.
-- Sample output given [above](https://github.com/tusharr-patil/sitemap/blob/main/sitemap_result.xml).
+- Sample output given [above](https://github.com/tusharr-patil/sitemap/blob/main/test.xml).
