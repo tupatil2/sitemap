@@ -29,7 +29,7 @@ var site string = ""
 var hostName string = ""
 
 // starting point
-func GenerateSiteMap(siteName string) {
+func GenerateSiteMap(siteName string, pages int) {
 
 	// site name parsing
 	siteLen := len(siteName)
@@ -48,11 +48,11 @@ func GenerateSiteMap(siteName string) {
 
 	// get the urls
 	log.Println("getting the urls")
-	urls := getAllUrls(site)
+	urls := getAllUrls(site, pages)
 
 	// generate xml
-	log.Println("generating the xml file")
 	encodeToXML(urls)
+	log.Println("generated the xml file")
 }
 
 // encode the string urls to xml format
@@ -81,7 +81,10 @@ func encodeToXML(urls []string) {
 }
 
 // gets all the urls related to siteName using bfs
-func getAllUrls(siteName string) []string {
+func getAllUrls(siteName string, pages int) []string {
+	if pages == 0 {
+		return []string{}
+	}
 	vis := make(map[string]bool)
 	q := Queue{}
 
@@ -90,6 +93,7 @@ func getAllUrls(siteName string) []string {
 	vis[siteName] = true
 	q.enqueue(siteName)
 	urls = append(urls, siteName)
+	depth := pages
 
 	for q.size() != 0 {
 		size := q.size()
@@ -121,6 +125,10 @@ func getAllUrls(siteName string) []string {
 				}
 			}
 			size--
+		}
+		depth--
+		if depth == 0 {
+			break
 		}
 	}
 
