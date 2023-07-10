@@ -33,6 +33,11 @@ func GenerateSiteMap(siteName string, pages int) {
 
 	// site name parsing
 	siteLen := len(siteName)
+	if siteLen == 0 {
+		log.Println("no sitename provided")
+		return
+	}
+
 	if siteName[siteLen-1] == '/' {
 		site = siteName[0 : siteLen-1]
 	} else {

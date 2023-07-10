@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>XML Sitemap Generator</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 5px;
+      text-align: center;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .input-group {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .input-group input[type="text"] {
+      padding: 10px;
+      margin-right: 10px;
+      width: 70%;
+      max-width: 300px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    
+    .input-group button {
+      padding: 10px 20px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    
+    .loading {
+      text-align: center;
+      margin-bottom: 20px;
+      display: none;
+    }
+    
+    .result-box {
+      padding: 20px;
+      background-color: #f0f0f0;
+      border-radius: 4px;
+      overflow-wrap: break-word;
+    }
+  </style>
+  <script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+      const form = document.getElementById('generate-form');
+      const resultBox = document.getElementById('result-box');
+      const loadingIndicator = document.getElementById('loading-indicator');
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        resultBox.innerHTML = '';
+        loadingIndicator.style.display = 'block';
+
+        setTimeout(() => {
+          // Simulating loading time
+          const siteName = document.getElementById('site-name').value;
+          const xmlContent = generateXML(siteName);
+          loadingIndicator.style.display = 'none';
+          resultBox.innerText = xmlContent;
+        }, 1000);
+      });
+
+      function generateXML(siteName) {
+        // Perform XML generation logic here
+        // Replace the following line with your actual XML generation code
+        return `<?xml version="1.0" encoding="UTF-8"?><urlset></urlset>`;
+      }
+    });
+  </script>
+</head>
+<body>
+  <header>
+    <h1>XML Sitemap Generator</h1>
+  </header>
+  <div class="container">
+    <form id="generate-form">
+      <div class="input-group">
+        <input type="text" id="site-name" placeholder="Enter Site Name" required>
+        <button type="submit">Generate XML</button>
+      </div>
+    </form>
+    <div class="loading" id="loading-indicator">
+      <p>Loading...</p>
+    </div>
+    <div class="result-box" id="result-box"></div>
+  </div>
+</body>
+</html>
