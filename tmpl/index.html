@@ -64,33 +64,6 @@
       overflow-wrap: break-word;
     }
   </style>
-  <script>
-    window.addEventListener('DOMContentLoaded', (event) => {
-      const form = document.getElementById('generate-form');
-      const resultBox = document.getElementById('result-box');
-      const loadingIndicator = document.getElementById('loading-indicator');
-
-      form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        resultBox.innerHTML = '';
-        loadingIndicator.style.display = 'block';
-
-        setTimeout(() => {
-          // Simulating loading time
-          const siteName = document.getElementById('site-name').value;
-          const xmlContent = generateXML(siteName);
-          loadingIndicator.style.display = 'none';
-          resultBox.innerText = xmlContent;
-        }, 1000);
-      });
-
-      function generateXML(siteName) {
-        // Perform XML generation logic here
-        // Replace the following line with your actual XML generation code
-        return `<?xml version="1.0" encoding="UTF-8"?><urlset></urlset>`;
-      }
-    });
-  </script>
 </head>
 <body>
   <header>
@@ -99,14 +72,39 @@
   <div class="container">
     <form id="generate-form">
       <div class="input-group">
-        <input type="text" id="site-name" placeholder="Enter Site Name" required>
+        <input type="text" id="site-name" name="siteName" placeholder="Enter Site Name" required>
         <button type="submit">Generate XML</button>
       </div>
     </form>
-    <div class="loading" id="loading-indicator">
-      <p>Loading...</p>
+    <div class="result-box" id="result-box">
+      {{ .XMLResponse }}
     </div>
-    <div class="result-box" id="result-box"></div>
   </div>
 </body>
+<script>
+  document.getElementById("generate-form").addEventListener("submit", submitForm);
+  function submitForm(event) {
+    event.preventDefault();
+    console.log("in submit function")
+    var form = document.getElementById("generate-form");
+    var formData = new FormData(form);
+    fetch("/submit", {
+      method: "POST",
+      body: formData
+    })
+    .then(function(response) {
+      if (response.ok) {
+        console.log("Form submitted successfully!");
+        // Perform any additional actions on successful form submission
+      } else {
+        console.log("Form submission failed!");
+        // Handle form submission failure
+      }
+    })
+    .catch(function(error) {
+      console.log("An error occurred while submitting the form.");
+      // Handle error
+    });
+  }
+</script>
 </html>

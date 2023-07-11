@@ -6,7 +6,6 @@ import (
 	"log"
 	"net/http"
 	"net/url"
-	"os"
 	"strings"
 
 	Link "github.com/tusharr-patil/html-link-parser"
@@ -29,13 +28,13 @@ var site string = ""
 var hostName string = ""
 
 // starting point
-func GenerateSiteMap(siteName string, pages int) {
+func GenerateSiteMap(siteName string, pages int) string {
 
 	// site name parsing
 	siteLen := len(siteName)
 	if siteLen == 0 {
 		log.Println("no sitename provided")
-		return
+		return ""
 	}
 
 	if siteName[siteLen-1] == '/' {
@@ -56,12 +55,11 @@ func GenerateSiteMap(siteName string, pages int) {
 	urls := getAllUrls(site, pages)
 
 	// generate xml
-	encodeToXML(urls)
-	log.Println("generated the xml file")
+	return encodeToXML(urls)
 }
 
 // encode the string urls to xml format
-func encodeToXML(urls []string) {
+func encodeToXML(urls []string) string {
 	var urlArray []URL
 
 	for _, url := range urls {
@@ -82,7 +80,9 @@ func encodeToXML(urls []string) {
 
 	xmlData = append([]byte(xml.Header), xmlData...)
 
-	os.Stdout.Write(xmlData)
+	log.Println("generated the xml file")
+
+	return string(xmlData)
 }
 
 // gets all the urls related to siteName using bfs

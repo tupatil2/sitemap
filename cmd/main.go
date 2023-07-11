@@ -1,13 +1,18 @@
 package main
 
 import (
-	"flag"
 	"html/template"
 	"log"
 	"net/http"
 
 	Sitemap "github.com/tusharr-patil/sitemap/pkg"
 )
+
+var siteName string
+
+type Response struct {
+	XMLResponse string
+}
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("tmpl/main.page.tmpl"))
@@ -17,13 +22,23 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func handlerSubmit(w http.ResponseWriter, r *http.Request) {
+	siteName = r.FormValue("siteName")
+	log.Println("site name is receive", siteName)
+	pages := 10
+
+	xmlResponse := Sitemap.GenerateSiteMap(siteName, pages)
+	resp := Response{XMLResponse: xmlResponse}
+	tmpl := template.Must(template.ParseFiles("tmpl/main.page.tmpl"))
+	err := tmpl.Execute(w, resp)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
 func main() {
 	http.HandleFunc("/", handler)
-	siteName := flag.String("site", "", "provide the name of the site")
-	pages := flag.Int("pages", 10, "pages to crawl")
-	flag.Parse()
-	Sitemap.GenerateSiteMap(*siteName, *pages)
-
+	http.HandleFunc("/submit", handlerSubmit)
 	log.Println("starting server at port 8080")
 	http.ListenAndServe(":8080", nil)
 }
