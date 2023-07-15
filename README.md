@@ -7,20 +7,9 @@ For more info: https://www.sitemaps.org/index.html
 
 ## How to run it locally?
 
-Import the package:
-
-```
-go get -u github.com/tusharr-patil/sitemap
-```
-Run 
-
-```
-Sitemap.GenerateSiteMap("https://gophercises.com/")
-```
-
 Run
 ```
-go run cmd/*.go -site="https://gophercises.com/" > output.xml
+go run cmd/*.go
 ```
 
 
