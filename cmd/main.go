@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -23,28 +22,14 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// func handlerSubmit(w http.ResponseWriter, r *http.Request) {
-// 	siteName = r.FormValue("siteName")
-// 	log.Println("site name is receive", siteName)
-// 	pages := 10
-
-// 	xmlResponse := Sitemap.GenerateSiteMap(siteName, pages)
-// 	resp := Response{XMLResponse: xmlResponse}
-// 	tmpl := template.Must(template.ParseFiles("tmpl/main.page.tmpl"))
-// 	err := tmpl.Execute(w, resp)
-// 	if err != nil {
-// 		http.Error(w, err.Error(), http.StatusInternalServerError)
-// 	}
-// }
-
 func handlerSubmit(w http.ResponseWriter, r *http.Request) {
 	siteName = r.FormValue("siteName")
 	log.Println("site name is received:", siteName)
 	pages := 10
 
 	xmlResponse := Sitemap.GenerateSiteMap(siteName, pages)
-	fmt.Println(xmlResponse)
-	// Set the response content type as plain text
+
+	// Set the response content type as xml text
 	w.Header().Set("Content-Type", "text/xml")
 
 	// Write the XML response
