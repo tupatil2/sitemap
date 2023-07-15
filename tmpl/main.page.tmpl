@@ -77,7 +77,8 @@
       </div>
     </form>
     <div class="result-box" id="result-box">
-      {{ .XMLResponse }}
+      <div class="loading" id="loading-message">Generating XML...</div>
+      <div id="xml-response"></div>
     </div>
   </div>
 </body>
@@ -85,26 +86,49 @@
   document.getElementById("generate-form").addEventListener("submit", submitForm);
   function submitForm(event) {
     event.preventDefault();
-    console.log("in submit function")
     var form = document.getElementById("generate-form");
     var formData = new FormData(form);
+    var loadingMessage = document.getElementById("loading-message");
+    var xmlResponseElement = document.getElementById("xml-response");
+
+    // Display the loading message
+    loadingMessage.style.display = "block";
+    xmlResponseElement.innerHTML = "";
+
     fetch("/submit", {
       method: "POST",
       body: formData
     })
-    .then(function(response) {
-      if (response.ok) {
-        console.log("Form submitted successfully!");
-        // Perform any additional actions on successful form submission
-      } else {
-        console.log("Form submission failed!");
-        // Handle form submission failure
-      }
-    })
-    .catch(function(error) {
-      console.log("An error occurred while submitting the form.");
-      // Handle error
-    });
+      .then(function(response) {
+        if (response.ok) {
+          return response.text();
+        } else {
+          throw new Error("Form submission failed!");
+        }
+      })
+      .then(function(xmlResponse) {
+        // Hide the loading message
+        loadingMessage.style.display = "none";
+
+        // Create a "Sitemap generated" message
+        var messageElement = document.createElement("p");
+        messageElement.textContent = "Sitemap generated";
+        xmlResponseElement.appendChild(messageElement);
+
+        // Create a download link for the XML response
+        var downloadLink = document.createElement("a");
+        downloadLink.setAttribute("href", "data:text/xml;charset=utf-8," + encodeURIComponent(xmlResponse));
+        downloadLink.setAttribute("download", "sitemap.xml");
+        downloadLink.textContent = "Download as XML";
+
+        // Append the download link to the XML response container
+        xmlResponseElement.appendChild(downloadLink);
+      })
+      .catch(function(error) {
+        console.log("An error occurred while submitting the form.");
+        // Handle error
+      });
   }
 </script>
+
 </html>
