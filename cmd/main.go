@@ -4,6 +4,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"os"
 
 	Sitemap "github.com/tusharr-patil/sitemap/pkg"
 )
@@ -40,5 +41,11 @@ func main() {
 	http.HandleFunc("/", handler)
 	http.HandleFunc("/submit", handlerSubmit)
 	log.Println("starting server at port 8080")
-	http.ListenAndServe(":8080", nil)
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = ":8080"
+	} else {
+		port = "0.0.0.0:" + port
+	}
+	http.ListenAndServe(port, nil)
 }
