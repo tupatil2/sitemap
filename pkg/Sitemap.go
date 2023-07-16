@@ -2,7 +2,6 @@ package Sitemap
 
 import (
 	"encoding/xml"
-	"fmt"
 	"log"
 	"net/http"
 	"net/url"
@@ -75,7 +74,7 @@ func encodeToXML(urls []string) string {
 	xmlData, err := xml.MarshalIndent(urlSet, "", "  ")
 
 	if err != nil {
-		fmt.Println("Error encoding XML:", err)
+		log.Println("Error encoding XML:", err)
 	}
 
 	xmlData = append([]byte(xml.Header), xmlData...)
@@ -184,21 +183,21 @@ func parseLink(link string) []Link.Link {
 	response, err := http.Get(link)
 
 	if err != nil {
-		fmt.Println("Error wile fetching response from the site")
-		panic(err)
+		log.Println("Error wile fetching response from the site")
+		panic("Error wile fetching response from the site")
 	}
 
 	defer response.Body.Close()
 
 	if response.StatusCode != http.StatusOK {
-		fmt.Println("Http request failed with status ", response.StatusCode)
-		return []Link.Link{}
+		log.Println("Http request failed with status ", response.StatusCode)
+		panic("Http request failed")
 	}
 
 	doc, err := html.Parse(response.Body)
 
 	if err != nil {
-		fmt.Println("error while parsing html", err)
+		log.Println("error while parsing html", err)
 		panic("error while parsing html")
 	}
 

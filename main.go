@@ -40,12 +40,12 @@ func handlerSubmit(w http.ResponseWriter, r *http.Request) {
 func main() {
 	http.HandleFunc("/", handler)
 	http.HandleFunc("/submit", handlerSubmit)
-	log.Println("starting server at port 8080")
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = ":8080"
 	} else {
 		port = "0.0.0.0:" + port
 	}
+	log.Printf("starting server at port %v \n", port)
 	http.ListenAndServe(port, nil)
 }

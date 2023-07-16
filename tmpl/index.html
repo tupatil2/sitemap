@@ -146,10 +146,11 @@
         xmlResponseElement.appendChild(downloadLink);
       })
       .catch(function(error) {
-        console.log("An error occurred while submitting the form.");
-        // Handle error
+        loadingMessage.style.display = "none";
+        var messageElement = document.createElement("p");
+        messageElement.textContent = "Something went wrong! Try Again!!";
+        xmlResponseElement.appendChild(messageElement);
       });
   }
 </script>
-
 </html>
