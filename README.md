@@ -5,7 +5,7 @@ Sitemaps are an easy way for webmasters to inform search engines about pages on 
 
 For more info: https://www.sitemaps.org/index.html
 
-Checkout **Deployed app**: [sitemap generator](https://sitemap-production.up.railway.app/)
+Checkout **Deployed app**: [sitemap generator](https://sitemap-generator.up.railway.app/)
 
 ## Functionality
 
