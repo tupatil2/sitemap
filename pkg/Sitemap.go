@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+	"time"
 
 	Link "github.com/tusharr-patil/html-link-parser"
 	"golang.org/x/net/html"
@@ -19,15 +20,16 @@ type URLSet struct {
 }
 
 type URL struct {
-	Loc string `xml:"loc"`
+	Loc      string  `xml:"loc"`
+	Lastmod  string  `xml:"lastmod,omitempty"`
+	Priority float64 `xml:"priority,omitempty"`
 }
 
 var site string = ""
-
 var hostName string = ""
 
 // starting point
-func GenerateSiteMap(siteName string, pages int) string {
+func GenerateSiteMap(siteName string, pages int64, priority float64, modifieddate bool) string {
 
 	// site name parsing
 	siteLen := len(siteName)
@@ -48,21 +50,33 @@ func GenerateSiteMap(siteName string, pages int) string {
 		log.Fatalln("Error which parsing the siteName URL")
 	}
 	hostName = parsedURL.Host
+	var lastmod string = ""
+	if modifieddate {
+		now := time.Now().UTC()
+		lastmod = string(now.Format("2006-01-02T15:04:05Z07:00"))
+	}
 
 	// get the urls
 	log.Println("getting the urls")
 	urls := getAllUrls(site, pages)
 
 	// generate xml
-	return encodeToXML(urls)
+	return encodeToXML(urls, priority, lastmod)
 }
 
 // encode the string urls to xml format
-func encodeToXML(urls []string) string {
+func encodeToXML(urls []string, priority float64, lastmod string) string {
 	var urlArray []URL
 
 	for _, url := range urls {
-		urlArray = append(urlArray, URL{Loc: url})
+		url := URL{Loc: url}
+		if lastmod != "" {
+			url.Lastmod = lastmod
+		}
+		if priority != -1.0 {
+			url.Priority = priority
+		}
+		urlArray = append(urlArray, url)
 	}
 
 	urlSet := URLSet{
@@ -85,10 +99,7 @@ func encodeToXML(urls []string) string {
 }
 
 // gets all the urls related to siteName using bfs
-func getAllUrls(siteName string, pages int) []string {
-	if pages == 0 {
-		return []string{}
-	}
+func getAllUrls(siteName string, pages int64) []string {
 	vis := make(map[string]bool)
 	q := Queue{}
 
