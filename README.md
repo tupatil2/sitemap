@@ -19,5 +19,5 @@ Checkout **Deployed app**: [sitemap generator](https://sitemap-generator.up.rail
 
 Run
 ```
-go run cmd/*.go
+go run main.go
 ```
