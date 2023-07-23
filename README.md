@@ -12,8 +12,8 @@ Checkout **Deployed app**: [sitemap generator](https://sitemap-generator.up.rail
 - Uses BFS for faster performance.
 - User can add modified date, priority in the xml.
 - User can crawl through 500 pages.
-- Uses [html-link-parser](github.com/tusharr-patil/html-link-parser) package to parse the link from html page.
-- Sample output given [above](https://github.com/tusharr-patil/sitemap/blob/main/test.xml).
+- Uses [html-link-parser](https://github.com/tusharr-patil/html-link-parser) package to parse the link from html page.
+- Sample output given [above](https://github.com/tusharr-patil/sitemap/blob/main/sitemap_result.xml).
   
 ## How to run it locally?
 
